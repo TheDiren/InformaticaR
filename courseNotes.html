@@ -1303,7 +1303,26 @@ while(a&lt;1000){
 ## [1] 3.741657
 ## [1] 3.872983</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li><p>The function “rbinom(1,1,0.9)” models a very unfair coin, which shows the head (1) with a probability of 90 %. Flip this coin until you get tail (0). Count how many times you flipped the coin.</p></li>
+<li>The function “rbinom(1,1,0.9)” models a very unfair coin, which shows the head (1) with a probability of 90 %. Flip this coin until you get tail (0). Count how many times you flipped the coin.</li>
+</ol>
+<pre class="r"><code>coin &lt;- rbinom(1,1,0.9)
+counter &lt;- 0
+while(coin==1){
+  coin &lt;- rbinom(1,1,0.9)
+  counter &lt;- counter +1
+}
+ print(counter)</code></pre>
+<pre><code>## [1] 6</code></pre>
+<p>Other solution</p>
+<pre class="r"><code>coin &lt;- 1
+index &lt;- 0
+while(coin!=0){
+  coin &lt;- rbinom(1,1,0.9)
+  index &lt;- index +1
+}
+index</code></pre>
+<pre><code>## [1] 26</code></pre>
+<ol start="3" style="list-style-type: decimal">
 <li>Repeat each character of the string “Summer” 3 times. Combine all characters to a new string.
 <button onclick="myFunction('string')">
 Show/ hide hint
@@ -1330,6 +1349,68 @@ Show/ hide hint
 <div id="combine" hidden="true">
 <p>Useful functions: - list.files - try or try-catch - rbind</p>
 </div>
+<p>Marielas approach, quite nice that it is avoiding the if-else within the loop. Caution, it is not reading all the files!</p>
+<pre class="r"><code>dir &lt;- &quot;forarexData&quot;
+FileList &lt;- list.files(dir)
+
+data1&lt;-read.csv(paste(dir, FileList[2], sep=&quot;&quot;), header = TRUE)
+datacombined&lt;-matrix(ncol=ncol(data1))
+colnames(datacombined)&lt;-colnames(data1)
+tempmatrix&lt;-matrix(ncol=ncol(data1))
+colnames(tempmatrix)&lt;-colnames(data1)
+
+for (i in 2:length(FileList)){
+  tempmatrix&lt;-read.csv(paste(dir, FileList[i], sep=&quot;&quot;))
+  datacombined&lt;-rbind(datacombined,tempmatrix)
+}</code></pre>
+<p>Solution with try</p>
+<pre class="r"><code>dir &lt;- &quot;forarexData/&quot;
+files &lt;- list.files(path = dir)
+print(files)
+for(i in 1:length(files)){
+  # use try-catch blog to find out, whether the formating of the file is ok
+  try({
+    if(!exists(&quot;foradata&quot;)){
+      # if this is the first file to be read, we just read the file
+      foradata &lt;- read.table(paste(dir, files[i], sep=&quot;&quot;), header = T, sep = &quot;,&quot;)
+    }else{
+      # if we read data before, we combine it with the current file
+      foradata &lt;- rbind(foradata, read.table(paste(dir, files[i], sep=&quot;&quot;), header = T, sep = &quot;,&quot;))
+    }
+  })
+  
+}
+# save the table
+write.table(foradata, file = &quot;allForaresData2.csv&quot;, sep = &quot;,&quot;, row.names = F)</code></pre>
+<p>Solution with try-catch</p>
+<pre class="r"><code>  dir &lt;- &quot;forarexData/&quot;
+  files &lt;- list.files(path = dir)
+  print(files)
+  for(i in 1:length(files)){
+    # use try-catch blog to find out, whether the formating of the file is ok
+    tryCatch({
+              if(!exists(&quot;foradata&quot;)){
+                # if this is the first file to be read, we just read the file
+                foradata &lt;- read.table(paste(dir, files[i], sep=&quot;&quot;), header = T, sep = &quot;,&quot;)
+              }else{
+                # if we read data before, we combine it with the current file
+                foradata &lt;- rbind(foradata, read.table(paste(dir, files[i], sep=&quot;&quot;), header = T, sep = &quot;,&quot;))
+              }
+        },
+        # handling of warnings, if there was some weird formating
+    warning = function(warning_condition){
+      print(paste(&quot;Skipping file&quot;, files[i]))
+      print(warning_condition)
+    },
+    # handling of errors, if there was some wrong formating
+    error = function(error_condition){
+      print(paste(&quot;Skipping file&quot;, files[i]))
+      print(error_condition)
+    })
+    
+  }
+  # save the table
+  write.table(foradata, file = &quot;allForaresData2.csv&quot;, sep = &quot;,&quot;, row.names = F)</code></pre>
 <p></dev></p>
 </div>
 </div>
@@ -1484,7 +1565,7 @@ x</code></pre>
 </ol>
 <pre class="r"><code>x &lt;- rnorm(10,100)
 round(sum(sqrt(x)), 3)</code></pre>
-<pre><code>## [1] 99.963</code></pre>
+<pre><code>## [1] 100.22</code></pre>
 <p></dev></p>
 </div>
 </div>
