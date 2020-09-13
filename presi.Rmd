@@ -1,0 +1,1022 @@
+---
+title: "Programming for Data Analysis and Statistics with R"
+subtitle: "(Informatica Feminale 2020)"
+author: Diren Senger
+date: September 2020
+output: ioslides_presentation
+---
+
+# Welcome 
+
+## Who are you?
+
+- What is your subject/ your profession?
+- How did you get to know R?
+- What is your motivation to learn more?
+
+## Organisation of the course
+
+- up to 2 hours of online-class from Monday to Tuesday
+- homework, to be done until next day
+- 1 hour for questions in the afternoon or evening via video-call, e-mail, stud-ip
+- if you want you can send me your homework until 6 pm
+- small project after the course (approx. 5 hours, or 35 hours)
+
+# Introduction
+
+## Short history of R
+
+- created in 1992
+- extends the S programming language
+- S was commercial, R is free software under the GNU license
+- implemented by **R**oss Ihaka and **R**obert Gentleman
+- since 1997 supported by the R Core Group
+- Aim: A programming language by Statisticians for Statisticians
+
+## The S Philosophy
+
+>[W]e wanted users to be able to begin in an interactive environment, where they did not consciously think of themselves as programming. Then as their needs became clearer and their sophistication increased, they should be able to slide gradually into programming, when the language and system aspects would become more important.”
+
+> `r tufte::quote_footer('--- John Chambers, Stages in the Evolution of S')`
+
+## Taxonomy of Programming Languages
+
+Low level:
+
+- Machine Code
+- Assembly
+
+High level(s):
+
+- 3rd generation, e.g. C, C++, Java
+- 4th generation, e.g. **R**, Python, MatLab
+- 5th generation/ artificial languages
+
+## Characteristics of R
+
+- it is considered object oriented 
+- but take care, object orientation in R is nasty!
+- imperative (you implement the "how" not the "what")
+- functional (you put instructions in functions, you can pass functions to functions)
+- not strongly typed (you do not know the type of an object before running your code)
+
+## Dos and Dont's
+
+R is great for
+
+- statistical modelling
+- mathematical calculations, vector arithmetic, ...
+- data visualisations
+- websites
+- reports
+
+You might want to choose an other programming language for
+
+- native applications
+- extensive calculations
+- agent-based models
+
+# RStudio Programming Environment and Workflow
+
+- live presentation, see course notes for explanations
+
+## Two questions
+
+1. If you type code directly in the console, will the objects you create occur in the environment frame? Could you imagine any problems occuring because of this?
+
+2. When I want to close R, there is this pop-up window asking 'Save workspace image to ~/Documents/informatica/R/.RData?'. What does this mean? Is this useful?
+
+## Answers
+
+1. Yes. All code you run will result in objects saved in the environment. You can click on the small broom symbol to delete all objects. A problem occurs when you change objects, but you do not consider that in your script.
+
+2. When you save the workspace, all object you created within the environment will be retained. The workspace is saved to a hidden file called .RData, saved to your current working directory / project directory. Advantages of saving the workspace: You start at the same point, with the same objects you had, when you last closed your session. You do not need to recompute your objects, which can be time-intensive. Disadvantages: Your working directory is not in a clean state, when you start. You write code, so that you are able to reproduce your calculation, so no need to store objects. There are other ways to store objects, which take a long time to compute (-> rds-files). ")
+
+
+# R Data types
+- Character
+- Numeric, integer
+- Logical
+- Factors
+- Vectors, matrices
+- Data frames
+
+## Character
+```{r}
+firstname <- "Diren"
+surname <- "Senger"
+name <- paste(firstname, surname) # Concatenation
+name
+class(name) # Check the type
+age <- as.character(25) # Casting
+class(age)
+```
+## Numeric
+```{r}
+a <- 1
+b <- 2
+c <- a + b
+c
+d <- b*c/a
+d
+e <- d^2
+e
+```
+
+## Integer
+```{r}
+f <- as.integer(3.14)
+f
+```
+
+## Logical
+```{r}
+a <- TRUE
+b <- FALSE
+
+# or
+a|b
+
+# and
+a&b
+
+# not
+!a
+```
+
+## Logical
+```{r}
+4 == 5
+
+4 < 5
+4 >= 4
+
+somevariable <- NULL
+is.null(somevariable)
+
+```
+
+
+## Vectors
+```{r}
+# a simple numeric vector
+myvector <- c(1,4,6)
+myvector
+# a vector of type character
+myfamily <- c("Paula", "Ali", "Emma")
+myfamily
+# get the first element of a vector
+myfamily[1]
+```
+
+## Vectors
+
+```{r}
+# apply function to all items:
+myvector + 1
+paste(myfamily, "Meier")
+# concatenate vectors:
+longervector <- c(myvector, 5:7)
+longervector
+```
+
+## Vectors
+
+```{r}
+# create a sequence
+odd <- seq(from = 1, to = 10, by = 2)
+odd
+# create a boring sequence
+boring <- rep(1, 10)
+boring
+```
+
+
+
+
+## Factors
+
+```{r}
+fac <- factor(c("good", "better", "best"))
+levels(fac)
+nlevels(fac)
+```
+
+## Named List
+
+```{r}
+result <- list(data="fancy test data", mean=5, sd=1.32)
+result
+```
+
+## List of lists
+and annoying double brackets
+```{r}
+myList <- list(smallLetters=letters[1:10], 
+               capitalLetters=LETTERS[1:10], 
+               numbers=1:5)
+myList
+```
+
+## List of lists
+and annoying double brackets
+```{r}
+# Accessing multiple elements
+myList[1:2]
+```
+
+## List of lists
+and annoying double brackets
+```{r}
+# Accessing single elements
+myList[2][2]
+myList[[2]][2]
+myList[[1:2]]
+```
+
+
+
+## Matrices
+```{r}
+m <- matrix(data=1:12, nrow = 3, ncol = 4)
+m
+```
+
+## Matrices - Element wise operations
+
+```{r}
+m
+# Element-wise operations
+m * 0.5
+```
+
+## Matrices - Element wise operations
+
+```{r}
+m
+# Element-wise operations
+m * c(1,2,3)
+```
+
+## Matrices - matrix/ vector multiplication
+
+```{r}
+m
+# Matrix multiplication
+m %*% c(1,2,3,4)
+```
+
+Good explanation of Matrix multiplication:
+[Eli Bendersky's website](https://eli.thegreenplace.net/2015/visualizing-matrix-multiplication-as-a-linear-combination/)
+
+
+## Data frames
+
+```{r}
+# Creating a data frame
+myfamily <- c("Paula", "Ali", "Emma")
+family.frame <- data.frame(index = 1:3, 
+                           firstname = myfamily, 
+                           surname = rep("Meier", 3))
+```
+```{r echo=F}
+library(knitr)
+kable(family.frame)
+```
+
+
+# Reading the data
+
+## Data from bee hives
+![](images/smallData.png)
+![](images/bees.jpeg){width=75%}
+
+## read.table
+![](images/readTable1.png)
+![](images/readTable2.png)
+
+
+## read.table
+```{r error=T}
+df <- read.table("beedatasmall.csv")
+```
+
+## read.table, second try
+```{r}
+df <- read.table("beedatasmall.csv", sep = ",")
+```
+```{r echo=F}
+library(knitr)
+kable(head(df, n = 5))
+```
+
+## read.table, third try
+
+```{r}
+df <- read.table("beedatasmall.csv", sep = ",", header = T)
+```
+```{r  echo=F}
+library(knitr)
+kable(head(df, n = 5))
+```
+
+## read.csv
+![](images/readcsv1.png)
+![](images/readcsv2.png)
+
+## read.csv
+
+```{r}
+df <- read.csv("beedatasmall.csv")
+```
+```{r  echo=F}
+library(knitr)
+kable(head(df, n = 5))
+```
+
+## common mistake with read.csv
+
+
+```{r}
+df <- read.csv("sampleData.csv")
+```
+
+```{r  echo=F}
+library(knitr)
+kable(head(df, n = 5))
+```
+
+
+## common mistake with read.csv
+![](images/sampleData.png)
+
+## common mistake with read.csv
+![](images/sampleData.png)
+```{r}
+df <- read.csv("sampleData.csv", sep=";")
+```
+
+```{r  echo=F}
+library(knitr)
+kable(head(df, n = 5))
+```
+
+
+## Transforming entire columns
+
+
+```{r}
+df <- read.csv("beedata.csv")
+str(df)
+```
+
+## Transforming entire columns
+E.g. converting kg to g:
+```{r}
+df$weight_g <- df$weight_kg*1000
+```
+
+```{r  echo=F}
+library(knitr)
+kable(head(df[,-(5:9)], n = 5))
+```
+
+## Transforming entire columns
+Marking high temperature values:
+```{r}
+df$highTemp <- df$t_i_1>25
+```
+```{r  echo=F}
+library(knitr)
+kable(head(df[,-(5:9)], n = 5))
+```
+
+## Transforming entire columns
+Nanoseconds to seconds:
+```{r}
+df$timeSeconds <- df$time/1000000000
+```
+```{r  echo=F}
+library(knitr)
+kable(head(df[,-(5:9)], n = 5))
+```
+
+## Transforming entire columns
+Dealing with the timestamp
+```{r}
+df$time <- as.POSIXct(df$timeSeconds, origin="1970-01-01")
+```
+```{r  echo=F}
+library(knitr)
+kable(head(df[,-(5:9)], n = 5))
+```
+
+## Subsetting data
+
+*df[choose_rows, choose_columns]*
+
+with some boolean expressions
+
+## Subsetting data
+Select and plot data from hive 4:
+
+```{r}
+df.4 <- df[df$hive==4,]
+plot(df.4$time, df.4$t_o, ylim=c(0,40))
+```
+
+## Subsetting data
+
+Select only the first 1000 lines:
+```{r}
+df.4.sub <- df.4[1:1000,]
+plot(df.4.sub$time, df.4.sub$t_o, ylim=c(0,40))
+```
+
+## Subsetting data
+
+Delete columns: / Choose only some columns
+
+```{r}
+names(df)
+df.some <- df[, c(1,2,10)]
+```
+```{r  echo=F}
+library(knitr)
+kable(head(df.some, n = 5))
+```
+
+## Subsetting data
+
+You can also use: 
+```{r}
+df.same <- df[, c("time", "hive", "weight_kg")]
+```
+```{r  echo=F}
+library(knitr)
+kable(head(df.same, n = 5))
+```
+
+## Subsetting data
+You can also use:
+```{r}
+df.or <- df[, -c(3:9,11:13)]
+```
+```{r  echo=F}
+library(knitr)
+kable(head(df.or, n = 5))
+```
+
+## Useful functions
+- summary
+- head
+- tail
+- sum
+- mean
+
+# Tuesday
+
+# Conditions - If and Else
+
+## If
+
+![](images/if.png){width=75%}
+
+## If
+```{r}
+a <- 19
+if(a >= 18){
+  print("Yes, you are allowed to see this content.")
+}
+```
+
+
+
+## If and else
+
+![](images/ifelse.png){width=75%}
+
+## If and else
+
+```{r}
+goodWeather <- TRUE
+if (goodWeather){
+  print("Let's go to the beach!")
+} else{
+  print("Let's eat pizza.")
+}
+```
+
+## Else-if
+![](images/elseif.png){width=75%}
+
+## Else-if
+
+```{r}
+
+do.you.want.this <- "chocolate"
+#do.you.want.this <- "cookies"
+#do.you.want.this <- "carrots"
+if (do.you.want.this == "chocolate"){
+  print("Yes, I love chocolate!")
+} else if (do.you.want.this == "cookies"){
+  print("Yes, if they are with chocolate.")
+} else {
+  print("Hm, not sure. Do you have chocolate?")
+}
+```
+
+## Else-if
+```{r include=F}
+library(lubridate)
+```
+
+
+```{r}
+library(lubridate)
+birthday <- as.POSIXct("2019-08-06 10:50:18")
+what.do.you.want.to.know <- "year"
+#what.do.you.want.to.know <- "month"
+#what.do.you.want.to.know <- "chocolate"
+if (what.do.you.want.to.know == "year"){
+  print(year(birthday))
+} else if (what.do.you.want.to.know == "month"){
+  print(month(birthday))
+} else {
+  print("Sorry, what do you want to know?")
+}
+```
+# For
+
+## For
+
+```{r}
+ages <- c(31, 29, 5)
+total.age <- 0
+for(i in ages){
+  total.age <- total.age + i
+}
+total.age
+```
+
+```{r}
+myfamily <- list(Paula=31, Ali=29, Emma=5)
+age <- 0
+for (i in 1:length(myfamily)){
+  age <- age + myfamily[[i]]
+}
+age
+```
+
+## For - columns
+
+```{r}
+for (i in 1:ncol(df)){
+  name <- names(df)[i]
+  colclass <- class(df[,i])
+  print(paste(name, ":", colclass))
+}
+```
+
+## For - transform long code ...
+
+```{r eval=F}
+df <- read.csv("beedata.csv")
+print("mean of h:")
+mean(df$h)
+print("mean of t_i_1:")
+mean(df$t_i_1)
+print("mean of weight_kg:")
+mean(df$weight_kg)
+print("missing h values:")
+sum(is.na(df$h))
+print("missing t_i_1 values:")
+sum(is.na(df$h))
+print("missing weight_kg values:")
+sum(is.na(df$h))
+```
+
+## into shorter code
+
+```{r eval=F}
+to.analyse <- c("h", "t_i_1", "weight_kg")
+for(i in 1:length(to.analyse)){
+  print(paste("mean of", to.analyse[i], ":"))
+  print(mean(to.analyse[i]))
+  print(paste("missing", to.analyse[i], "values:"))
+  print(sum(is.na(df[,to.analyse[i]])))
+}
+```
+
+## For - diagram 
+
+![](images/for.png){width=75%}
+
+
+## The apply family
+
+```{r}
+apply(df, 2, class)
+```
+
+## The apply family
+
+```{r}
+lapply(df, class)
+```
+
+## The apply family
+
+```{r}
+sapply(df, class)
+```
+
+
+# While
+
+## While
+```{r}
+a <- 2
+while (a<1000){
+  a <- a^2
+  print(a)
+}
+```
+
+## While - diagram 
+
+![](images/while.png){width=75%}
+
+## Do-while
+```{r}
+a <- 10
+repeat{
+  a <- a - sqrt(a)
+  print(a)
+  if(sqrt(a) > a){
+    break
+  }
+}
+```
+
+## bad example for Do-while
+```{r error=TRUE}
+a <- 0.5
+repeat{
+  a <- a - sqrt(a)
+  print(a)
+  if(sqrt(a) > a){
+    break
+  }
+}
+```
+
+## do-while - diagram 
+
+![](images/do-while.png){width=75%}
+
+## Nice comic
+
+[https://me.me/i/while-not-edge-do-run-run-while-not-edge-5b875ee64adb4e939ee50ad394309509](https://me.me/i/while-not-edge-do-run-run-while-not-edge-5b875ee64adb4e939ee50ad394309509)
+
+## For vs. While
+- if you do not know the number of iterations needed, use while
+- else, always use for!
+- it is easier to create a while-loop that never stops, than creating a for-loop that never stops.
+
+# Writing own functions
+
+## A simple function
+```{r}
+myPlus <- function(a, b){
+  return(a + b)
+}
+myPlus(1,2)
+```
+
+## Default parameters
+```{r}
+myPlus <- function(a=1, b=1){
+  return(a + b)
+}
+myPlus(1,2)
+myPlus()
+```
+
+## Returning multiple parameters
+```{r}
+dataframe.info <- function(df){
+  cells.count <- ncol(df)*nrow(df)
+  return(list(columns=ncol(df), rows=nrow(df), cells= cells.count))
+}
+dataframe.info(df)
+```
+
+# Information for tomorrow
+
+- Bring some data from your studies or professional background
+- or find some other open data you are interested in 
+
+# Wednesday
+
+# Debugging
+
+## Where are the bugs?
+
+```{r}
+funny.words <- function(s = "summer", count = 3){
+  s = "summer"
+  s1 <- ""
+  for(i in 1:2){
+    for(i in 1:count){
+      print(substr(s, i, i))
+      s1 <- paste(s1, substr(s, i, i), sep = "")
+    }
+  }
+  return(s1)
+}
+funny.words()
+
+funny.words("banana", 5)
+```
+
+## Debugging!
+
+![](images/debugging.jpeg)
+
+![](images/source.jpeg)
+
+## Your toolkit
+
+![](images/buttons.jpeg)
+
+- If you click on Next, R will execute the next line. (e.g. line 6)
+- If you click on the second button, R will step in the current function call, so it will basically jump into an other function. (e.g. into the print function)
+- If you click on the third button, R will execute the rest of the current function or loop. (e.g. line 6 and 7)
+- If you click on “continue”“, R will run until we come across the next breakpoint. (e.g. in the next round of the loop or in line 10)
+- If you click on “Stop”, R will exit the debug mode.
+
+## A pair-programming task
+
+Use the debugging options to find all mistakes in the funny.words function.
+
+# Piping
+
+## The basic piping operator
+```{r}
+library(magrittr)
+x <- 9
+# Calculate the square-root of x
+sqrt(x)
+
+# Calculate it using pipes
+x %>% sqrt
+
+```
+
+
+## Updating x
+
+```{r}
+x <- 9
+# Calculate the square-root of x and update x
+x <- sqrt(x)
+x
+
+# Calculate it using pipes
+x <- 9
+x %<>% sqrt
+x
+```
+
+## real-world example
+
+```{r}
+
+nrow(subset(df, hive==4))
+
+df %>% subset(hive==4) %>% nrow
+
+```
+
+# Plotting
+
+## Standard library
+
+```{r}
+# subset data
+df.4 <- df[df$hive==4,]
+# plot temperature outside
+plot(df.4$time, df.4$t_o, ylim=c(0,40),type = 'p', pch=4)
+# choose colours
+cl <- rainbow(5)
+# choose colums
+cols <- 4:8
+# plot each column
+for (i in 1:5){
+    lines(df.4$time, df.4[,cols[i]],col = cl[i],type = 'p', pch=4, ylim=c(0,40))
+}
+# add legend
+legend("topright", legend=c(1, 2, 3, 4, 5, "outside"),
+       col=c(cl, "black"), pch = 4, lty = 0, cex=0.8)
+```
+
+## Points or Lines? (type)
+
+- “p”: Points
+- “l”: Lines
+- “b”: Both
+
+## Line type (lty)
+
+![http://www.sthda.com/english/wiki/line-types-in-r-lty](images/linetypes.png){width=75%}
+
+Source: [http://www.sthda.com/english/wiki/line-types-in-r-lty](http://www.sthda.com/english/wiki/line-types-in-r-lty)
+
+## Point types (pch)
+![http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r](images/dottypes.png){width=75%}
+
+Source: [http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r](http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r)
+
+## ggplot
+
+```{r}
+# subset data
+df.4 <- df[df$hive==4,]
+# choose columns
+df.4.cols <- df.4[,c(1,4:9)]
+# reshape data
+library(reshape)
+mdf <- melt(df.4.cols, id=c("time")) 
+# plot data
+library(ggplot2)
+ggplot(data = mdf, aes(x=time, y=value)) + geom_line(aes(colour=variable)) + ylim(c(0, 40))
+```
+
+## Saving your plot
+```{r eval=F}
+png("test.png")
+plot(hist(rnorm(100)))
+dev.off()
+```
+
+
+# Homework
+
+ Let's look at the homework together
+ 
+# Thursday
+
+# R-Markdown
+
+## R-Markdown is great!
+
+You can use it for basically everything.
+
+[https://rmarkdown.rstudio.com/gallery.html](https://rmarkdown.rstudio.com/gallery.html)
+
+## Output formats
+
+- html
+- pdf
+- word
+- ...
+
+![](images/rmarkdown.jpeg)
+
+## Header - html
+
+```{r eval=F}
+# html
+---
+title: "R Markdown Example"
+author: "Somebody"
+date: "August 14, 2019"
+output: html_document
+---
+```
+
+## Header - Word
+
+```{r eval=F}
+
+# word
+---
+title: "R Markdown Example"
+author: "Somebody"
+date: "August 14, 2019"
+output: word_document
+---
+
+```
+
+## Options
+
+```{r eval=F}
+
+---
+title: "R Markdown Example"
+author: "Somebody"
+date: "August 14, 2019"
+output: 
+  html_document:
+    toc: true # print a table of content
+    toc_depth: 2 # maximal depth of the table of content
+    number_sections: true # automatically number the sections
+    code_folding: hide # have buttons to show/ hide code
+    theme: united # specify a theme
+    toc_float: true # generate a navigation bar
+
+---
+```
+
+
+## Document structure
+
+```{r eval=F}
+# Header 1
+
+## Header 2
+
+### Header 3
+```
+
+
+
+## Code blocks
+
+Use the insert button. You have following further options:
+
+- eval: If set to true, the code will be executed
+- echo: If set to true, the output will be printed/ plotted
+- include: If set to true, the code will be printed.
+
+## Lists
+
+```{r eval=F}
+* unordered list
+    + sub-item 1
+    + sub-item 2
+        - sub-sub-item 1
+* item 2
+
+    
+1. ordered list
+2. item 2
+    i) sub-item 1
+
+```
+
+## Lists - how they look
+
+* unordered list
+    + sub-item 1
+    + sub-item 2
+        - sub-sub-item 1
+* item 2
+
+    
+1. ordered list
+2. item 2
+    i) sub-item 1
+
+
+
+## Insert an image
+
+```{r eval=F}
+![Some description](path to image)
+```
+
+## Further documentation
+
+A good documentation of R-Markdown can be found here: [https://bookdown.org/yihui/rmarkdown/](https://bookdown.org/yihui/rmarkdown/)
+
+And here is a cheat sheet: 
+[https://www.rstudio.com/resources/cheatsheets/#rmarkdown](https://www.rstudio.com/resources/cheatsheets/#rmarkdown)
+
+# Assignment
+
+## Assignment
+
+- Create an R-Markdown document
+- Choose a dataset
+- Think about the following question: What do you want fo find out? For a large assignment, you should write down a proper motivation for your analysis.
+- Choose 3 of the following tasks for a small assignment and 8 for a large assignment. You can also come up with own ideas.
+- Write a short text for each task explaining what you have been doing
+- If you are doing the large assignment, make sure to write about the origin of your data, the motivation for the analysis and discuss your results
+
+## Ideas
+
+- Make some exploratory analysis:
+  + print the mean/ median/ standard deviation for each column
+  + print the total number of missing values
+  + print the number of missing values for each column
+- Transform some of the columns/ Create new columns based on existing ones
+- Create a subset of your data
+- Exclude all rows with missing values
+- Create a plot
+- Write a function that takes a filename and some additional parameters. The function should create a plot and save it as “png” with that filename
+- Create a linear model
+
+# Enjoy R ;)
