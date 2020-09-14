@@ -546,9 +546,46 @@ if (what.do.you.want.to.know == "year"){
   print("Sorry, what do you want to know?")
 }
 ```
+
+## Rain or no rain
+
+![](images/rain.png){width=80%}
+
+## Rain or no rain
+
+```{r}
+raincoat <- T
+rain <- T
+if(raincoat){
+  if(rain){
+    print("dry")
+  } else{
+    print("useless raincoat")
+  }
+} else{
+  if(rain){
+    print("wet")
+  } else{
+    print("dry")
+  }
+}
+```
+
+
+
 # For
 
 ## For
+
+```{r}
+myfamily <- list(Paula=31, Ali=29, Emma=5)
+age <- 0
+for (i in 1:length(myfamily)){
+  age <- age + myfamily[[i]]
+}
+age
+```
+
 
 ```{r}
 ages <- c(31, 29, 5)
@@ -559,14 +596,6 @@ for(i in ages){
 total.age
 ```
 
-```{r}
-myfamily <- list(Paula=31, Ali=29, Emma=5)
-age <- 0
-for (i in 1:length(myfamily)){
-  age <- age + myfamily[[i]]
-}
-age
-```
 
 ## For - columns
 
@@ -647,13 +676,14 @@ while (a<1000){
 
 ![](images/while.png){width=75%}
 
-## Do-while
+## Do-while (Finding o)
 ```{r}
-a <- 10
+letters <- letters[]
 repeat{
-  a <- a - sqrt(a)
-  print(a)
-  if(sqrt(a) > a){
+  i <- as.integer(runif(1,1,26))
+  letter <- letters[i]
+  print(letter)
+  if(letter=='o'){
     break
   }
 }
@@ -678,6 +708,11 @@ repeat{
 ## Nice comic
 
 [https://me.me/i/while-not-edge-do-run-run-while-not-edge-5b875ee64adb4e939ee50ad394309509](https://me.me/i/while-not-edge-do-run-run-while-not-edge-5b875ee64adb4e939ee50ad394309509)
+
+## For vs. While
+
+When do you use for? When do you use while?
+Can you think of examples?
 
 ## For vs. While
 - if you do not know the number of iterations needed, use while
