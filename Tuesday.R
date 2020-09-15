@@ -63,7 +63,7 @@ money <- 14/3
 # problem. Return both values in a named list.
 # Use the dataframe and the hive number as input parameters.
 
-# 3. In a previous exercise, you wrote some code to read
+# 3. Difficult-follow-up: In a previous exercise, you wrote some code to read
 # in all files within a directory. 
 # Convert the code to a function.
 
