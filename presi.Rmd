@@ -791,9 +791,395 @@ funny.words("banana", 5)
 - If you click on “continue”“, R will run until we come across the next breakpoint. (e.g. in the next round of the loop or in line 10)
 - If you click on “Stop”, R will exit the debug mode.
 
-## A pair-programming task
+## pair-programming task
 
 Use the debugging options to find all mistakes in the funny.words function.
+
+## solution
+
+![](images/funnybugs.png){width=75%}
+
+# Plotting
+
+## Plotting
+
+- many, many libraries
+- we are going to look at base, ggplot and plotly
+
+## A basic plot (Standard library)
+
+```{r include=F}
+df <- read.csv("beedata.csv")
+df$timeSeconds <- df$time/1000000000
+df$time <- as.POSIXct(df$timeSeconds, origin="1970-01-01")
+```
+
+
+```{r}
+df.4 <- df[df$hive==4,]
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3)
+```
+
+## Improving (Standard library)
+
+```{r}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim=c(0,40)) # added this
+```
+
+## Improving (Standard library)
+
+```{r eval=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     xlab = "Time (2019)",  # added this
+     ylab = "Temperature within hive", # added this
+     main = "Sensor measurements") # added this
+
+```
+
+## Improving (Standard library)
+
+```{r echo=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     xlab = "Time (2019)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+
+```
+
+## Improving (Standard library)
+
+```{r eval=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b", # added this
+     lty = 1, # added this
+     xlab = "Time (2019)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+
+```
+
+## Points or Lines? (type)
+
+- “p”: Points
+- “l”: Lines
+- “b”: Both
+
+## Line type (lty)
+
+![http://www.sthda.com/english/wiki/line-types-in-r-lty](images/linetypes.png){width=75%}
+
+Source: [http://www.sthda.com/english/wiki/line-types-in-r-lty](http://www.sthda.com/english/wiki/line-types-in-r-lty)
+
+
+## Improving (Standard library)
+
+```{r echo=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     xlab = "Time (2019)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+
+```
+
+## Improving (Standard library)
+
+```{r eval = F}
+df.4 <- df.4[df.4$t_i_3>5&df.4$t_i_3<40,] # added this
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     xlab = "Time (2019)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+
+```
+
+## Improving (Standard library)
+
+```{r echo=F}
+df.4 <- df.4[df.4$t_i_3>5&df.4$t_i_3<40,]
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     xlab = "Time (2019)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+
+```
+
+
+
+
+## Improving (Standard library)
+
+```{r eval=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     pch = 4, # added this
+     xlab = "Time (2019)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+```
+
+## Improving (Standard library)
+
+```{r echo=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     pch = 4, # added this
+     xlab = "Time (2019)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+```
+
+
+## Point types (pch)
+![http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r](images/dottypes.png){width=50%}
+
+Source: [http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r](http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r)
+
+
+## Improving (Standard library)
+
+```{r eval=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     pch = 4,
+     xlim = as.POSIXct(c("2019-08-08", "2019-08-09")), # added this
+     xlab = "Time (2019-08-08)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+
+```
+
+## Improving (Standard library)
+
+```{r echo=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     pch = 4,
+     xlim = as.POSIXct(c("2019-08-08", "2019-08-09")),
+     xlab = "Time (2019-08-08)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements")
+
+```
+
+## Improving (Standard library)
+
+```{r eval=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     pch = 4,
+     xlim = as.POSIXct(c("2019-08-08", "2019-08-09")),
+     xlab = "Time (2019-08-08)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements",
+     xaxt="n")
+axis.POSIXct(1, 
+             at=seq(min(df.4$time), max(df.4$time), by="1 hour"), 
+             format="%H:00") # added this
+
+```
+
+
+## Improving (Standard library)
+
+```{r echo=F}
+# plot temperature outside
+plot(df.4$time, df.4$t_i_3, 
+     ylim = c(0,40), 
+     type = "b",
+     lty = 1,
+     pch = 4,
+     xlim = as.POSIXct(c("2019-08-08", "2019-08-09")),
+     xlab = "Time (2019-08-08)", 
+     ylab = "Temperature within hive", 
+     main = "Sensor measurements",
+     xaxt="n")
+axis.POSIXct(1, at=seq(min(df.4$time), max(df.4$time), by="1 hour"), format="%H:00")
+
+```
+
+
+
+
+
+
+
+## Even more complex (Standard library)
+
+```{r eval=F}
+# subset data
+df.4 <- df[df$hive==4,]
+# plot temperature outside
+plot(df.4$time, df.4$t_o, ylim=c(0,40),type = 'p', pch=4)
+# choose colours
+cl <- rainbow(5)
+# choose colums
+cols <- 4:8
+# plot each column
+for (i in 1:5){
+    lines(df.4$time, 
+          df.4[,cols[i]],
+          col = cl[i],
+          type = 'p', 
+          pch=4, 
+          ylim=c(0,40))
+}
+# add legend
+legend("topright", legend=c(1, 2, 3, 4, 5, "outside"),
+       col=c(cl, "black"), pch = 4, lty = 0, cex=0.8)
+```
+
+## Even more complex (Standard library)
+
+```{r eval=F}
+# add legend
+legend("topright", legend=c(1, 2, 3, 4, 5, "outside"),
+       col=c(cl, "black"), pch = 4, lty = 0, cex=0.8)
+```
+
+## Even more complex (Standard library)
+
+```{r echo=F}
+# subset data
+df.4 <- df[df$hive==4,]
+# plot temperature outside
+plot(df.4$time, df.4$t_o, ylim=c(0,40),type = 'p', pch=4)
+# choose colours
+cl <- rainbow(5)
+# choose colums
+cols <- 4:8
+# plot each column
+for (i in 1:5){
+    lines(df.4$time, df.4[,cols[i]],col = cl[i],type = 'p', pch=4, ylim=c(0,40))
+}
+# add legend
+legend("topright", legend=c(1, 2, 3, 4, 5, "outside"),
+       col=c(cl, "black"), pch = 4, lty = 0, cex=0.8)
+```
+
+## basic plot (ggplot)
+
+```{r}
+# plot data
+library(ggplot2)
+ggplot(data = df.4, aes(x=time, y=t_i_3)) + geom_point()
+```
+
+## improving (ggplot)
+
+```{r eval=F}
+# plot data
+library(ggplot2)
+ggplot(data = df.4, aes(x=time, y=t_i_3)) + geom_point(shape=4) + 
+  ylim(c(0, 40)) + 
+  xlab("Time (2019") + 
+  ylab("Temperature within hive") + 
+  ggtitle("Sensor measurements")
+```
+## improving (ggplot)
+
+```{r echo=F}
+# plot data
+library(ggplot2)
+ggplot(data = df.4, aes(x=time, y=t_i_3)) + geom_point(shape=4) + 
+  ylim(c(0, 40)) + 
+  xlab("Time (2019") + 
+  ylab("Temperature within hive") + 
+  ggtitle("Sensor measurements")
+```
+
+
+## more complex (ggplot)
+
+```{r eval =F}
+# subset data
+df.4 <- df[df$hive==4,]
+# choose columns
+df.4.cols <- df.4[,c(1,4:9)]
+# reshape data
+library(reshape)
+mdf <- melt(df.4.cols, id=c("time")) 
+# plot data
+library(ggplot2)
+ggplot(data = mdf, aes(x=time, y=value)) + geom_line(aes(colour=variable)) + ylim(c(0, 40))
+```
+
+## more complex (ggplot)
+
+```{r echo=F, message = FALSE}
+# subset data
+df.4 <- df[df$hive==4,]
+# choose columns
+df.4.cols <- df.4[,c(1,4:9)]
+# reshape data
+library(reshape)
+mdf <- melt(df.4.cols, id=c("time")) 
+# plot data
+library(ggplot2)
+ggplot(data = mdf, aes(x=time, y=value)) + geom_line(aes(colour=variable)) + ylim(c(0, 40))
+```
+
+## Basic plot (plotly)
+
+```{r eval = F}
+library(plotly)
+fig <- plot_ly(df.4[1:100,], x = ~time, y = ~t_i_3)
+fig
+
+```
+
+## Basic plot (plotly)
+
+```{r echo = F, message = FALSE}
+library(plotly)
+fig <- plot_ly(df.4[1:100,], x = ~time, y = ~t_i_3)
+fig
+
+```
+
+
+## Saving your plot
+```{r eval=F}
+png("test.png")
+plot(hist(rnorm(100)))
+dev.off()
+```
+
 
 # Piping
 
@@ -832,67 +1218,6 @@ nrow(subset(df, hive==4))
 
 df %>% subset(hive==4) %>% nrow
 
-```
-
-# Plotting
-
-## Standard library
-
-```{r}
-# subset data
-df.4 <- df[df$hive==4,]
-# plot temperature outside
-plot(df.4$time, df.4$t_o, ylim=c(0,40),type = 'p', pch=4)
-# choose colours
-cl <- rainbow(5)
-# choose colums
-cols <- 4:8
-# plot each column
-for (i in 1:5){
-    lines(df.4$time, df.4[,cols[i]],col = cl[i],type = 'p', pch=4, ylim=c(0,40))
-}
-# add legend
-legend("topright", legend=c(1, 2, 3, 4, 5, "outside"),
-       col=c(cl, "black"), pch = 4, lty = 0, cex=0.8)
-```
-
-## Points or Lines? (type)
-
-- “p”: Points
-- “l”: Lines
-- “b”: Both
-
-## Line type (lty)
-
-![http://www.sthda.com/english/wiki/line-types-in-r-lty](images/linetypes.png){width=75%}
-
-Source: [http://www.sthda.com/english/wiki/line-types-in-r-lty](http://www.sthda.com/english/wiki/line-types-in-r-lty)
-
-## Point types (pch)
-![http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r](images/dottypes.png){width=75%}
-
-Source: [http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r](http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r)
-
-## ggplot
-
-```{r}
-# subset data
-df.4 <- df[df$hive==4,]
-# choose columns
-df.4.cols <- df.4[,c(1,4:9)]
-# reshape data
-library(reshape)
-mdf <- melt(df.4.cols, id=c("time")) 
-# plot data
-library(ggplot2)
-ggplot(data = mdf, aes(x=time, y=value)) + geom_line(aes(colour=variable)) + ylim(c(0, 40))
-```
-
-## Saving your plot
-```{r eval=F}
-png("test.png")
-plot(hist(rnorm(100)))
-dev.off()
 ```
 
 
