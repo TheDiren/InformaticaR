@@ -875,7 +875,7 @@ plot(df.4$time, df.4$t_i_3,
 
 ## Line type (lty)
 
-![http://www.sthda.com/english/wiki/line-types-in-r-lty](images/linetypes.png){width=75%}
+![](images/linetypes.png){width=50%}
 
 Source: [http://www.sthda.com/english/wiki/line-types-in-r-lty](http://www.sthda.com/english/wiki/line-types-in-r-lty)
 
@@ -957,7 +957,7 @@ plot(df.4$time, df.4$t_i_3,
 
 
 ## Point types (pch)
-![http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r](images/dottypes.png){width=50%}
+![](images/dottypes.png){width=50%}
 
 Source: [http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r](http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r)
 
@@ -1136,7 +1136,9 @@ library(reshape)
 mdf <- melt(df.4.cols, id=c("time")) 
 # plot data
 library(ggplot2)
-ggplot(data = mdf, aes(x=time, y=value)) + geom_line(aes(colour=variable)) + ylim(c(0, 40))
+ggplot(data = mdf, aes(x=time, y=value)) + 
+  geom_line(aes(colour=variable)) + 
+  ylim(c(0, 40))
 ```
 
 ## more complex (ggplot)
@@ -1151,7 +1153,9 @@ library(reshape)
 mdf <- melt(df.4.cols, id=c("time")) 
 # plot data
 library(ggplot2)
-ggplot(data = mdf, aes(x=time, y=value)) + geom_line(aes(colour=variable)) + ylim(c(0, 40))
+ggplot(data = mdf, aes(x=time, y=value)) + 
+  geom_line(aes(colour=variable)) + 
+  ylim(c(0, 40))
 ```
 
 ## Basic plot (plotly)

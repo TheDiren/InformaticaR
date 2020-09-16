@@ -1,15 +1,3 @@
-## Exercises - Piping
-
-# 1. Rewrite the following code using %>% and %<>%:
-
-x <- 2
-round(log(x))
-
-
-# 2. Rewrite the second line of following code:
-
-x <- rnorm(10,100)
-round(sum(sqrt(x)), 3)
 
 
 ## Plotting
@@ -18,7 +6,7 @@ round(sum(sqrt(x)), 3)
 # Decide for one of the presented plotting-libraries.
 # Create a plot and add a title and custom x and y labels.
 # In case you plotted multiple lines, add a legend.
-# Try to find out, how you can change the fontsize of the axis-labels.
+# Difficult: Try to find out, how you can change the fontsize of the axis-labels.
 
 # 2. Automatically save your plot to a given destination  
 
@@ -31,6 +19,20 @@ round(sum(sqrt(x)), 3)
 #    a parameter for the choice of the subset.
 
 # Always have in mind: if something goes wrong, you can use debugging.
+
+# Exercises - Piping
+
+# 1. Rewrite the following code using %>% and %<>%:
+
+x <- 2
+round(log(x))
+
+
+# 2. Rewrite the second line of following code:
+
+x <- rnorm(10,100)
+round(sum(sqrt(x)), 3)
+
 
 ## Loops and functions again
 # If you have some code you wrote in the past 
