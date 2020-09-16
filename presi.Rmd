@@ -1176,6 +1176,16 @@ fig
 
 ```
 
+## How to save plotly plots
+
+```{r}
+p <- plot_ly(df.4[1:100,], x = ~time, y = ~t_i_3)
+# saving the plot as html
+htmlwidgets::saveWidget(p, "testploty.html")
+# if you want to have a static image, e.g. png, you can then open the html file, and use the small button with the camera symbol to export as png. You could also use the library orca to directly export a static image using plotly directly from your code, but it seems to be a bit complicated to install orca.
+# I haven't used powerpoint for a long time, but I think there should be a way to embed a html file: https://www.techwalla.com/articles/how-to-embed-an-excel-workbook-icon-into-powerpoint
+```
+
 
 ## Saving your plot
 ```{r eval=F}
@@ -1313,7 +1323,6 @@ Use the insert button. You have following further options:
 
 - eval: If set to true, the code will be executed
 - echo: If set to true, the output will be printed/ plotted
-- include: If set to true, the code will be printed.
 
 ## Lists
 
@@ -1363,6 +1372,12 @@ And here is a cheat sheet:
 
 ## Assignment
 
+- you all get a confirmation of participation
+- you can submit a small assignment (~5 hours of work, 1 CP)
+- you can submit a large assignment (~35 hours of work, 2 CP)
+
+## Assignment
+
 - Create an R-Markdown document
 - Choose a dataset
 - Think about the following question: What do you want fo find out? For a large assignment, you should write down a proper motivation for your analysis.
@@ -1373,14 +1388,32 @@ And here is a cheat sheet:
 ## Ideas
 
 - Make some exploratory analysis:
-  + print the mean/ median/ standard deviation for each column
-  + print the total number of missing values
-  + print the number of missing values for each column
+    + print the mean/ median/ standard deviation for each column
+    + print the total number of missing values
+    + print the number of missing values for each column
 - Transform some of the columns/ Create new columns based on existing ones
 - Create a subset of your data
 - Exclude all rows with missing values
 - Create a plot
 - Write a function that takes a filename and some additional parameters. The function should create a plot and save it as “png” with that filename
 - Create a linear model
+
+## Assignment
+
+- If you want to do an assignment, please send me an e-mail:
+
+- "I want to do a small/ large assignment.""
+- "I do not want a grade on my certificate. / I want to have a grade on my certificate./
+I want to have a grade if it is better than <1.3, 1.7, 2.0, 2.3, 2.7, 3.0, ...>"
+
+## Deadline
+
+- It might be easier for you to do it soon.
+- Suggestion for deadline: 15th of October
+
+## Evaluation
+
+The summer university team will send you an e-mail for an online-evaluation.
+
 
 # Enjoy R ;)
