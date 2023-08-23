@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>11 Linear Models | Programming for Data Analysis and Statistics with R</title>
+  <meta name="description" content="11 Linear Models | Programming for Data Analysis and Statistics with R" />
+  <meta name="generator" content="bookdown 0.35 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="11 Linear Models | Programming for Data Analysis and Statistics with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="11 Linear Models | Programming for Data Analysis and Statistics with R" />
+  
+  
+  
+
+<meta name="author" content="Diren Senger" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="piping.html"/>
+<link rel="next" href="plotting.html"/>
+<script src="book_assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="book_assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="book_assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="book_assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="book_assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="book_assets/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1</b> About</a></li>
+<li class="chapter" data-level="2" data-path="installation-notes.html"><a href="installation-notes.html"><i class="fa fa-check"></i><b>2</b> Installation Notes</a></li>
+<li class="chapter" data-level="3" data-path="rstudio-programming-environment.html"><a href="rstudio-programming-environment.html"><i class="fa fa-check"></i><b>3</b> RStudio Programming Environment</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="rstudio-programming-environment.html"><a href="rstudio-programming-environment.html#creating-a-new-project"><i class="fa fa-check"></i><b>3.1</b> Creating a new project</a></li>
+<li class="chapter" data-level="3.2" data-path="rstudio-programming-environment.html"><a href="rstudio-programming-environment.html#rstudio-screen"><i class="fa fa-check"></i><b>3.2</b> RStudio screen</a></li>
+<li class="chapter" data-level="3.3" data-path="rstudio-programming-environment.html"><a href="rstudio-programming-environment.html#r-workflow"><i class="fa fa-check"></i><b>3.3</b> R Workflow</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="r-data-types.html"><a href="r-data-types.html"><i class="fa fa-check"></i><b>4</b> R Data types</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="r-data-types.html"><a href="r-data-types.html#character"><i class="fa fa-check"></i><b>4.1</b> Character</a></li>
+<li class="chapter" data-level="4.2" data-path="r-data-types.html"><a href="r-data-types.html#numeric"><i class="fa fa-check"></i><b>4.2</b> Numeric</a></li>
+<li class="chapter" data-level="4.3" data-path="r-data-types.html"><a href="r-data-types.html#logical"><i class="fa fa-check"></i><b>4.3</b> Logical</a></li>
+<li class="chapter" data-level="4.4" data-path="r-data-types.html"><a href="r-data-types.html#and"><i class="fa fa-check"></i><b>4.4</b> &amp;&amp; and ||</a></li>
+<li class="chapter" data-level="4.5" data-path="r-data-types.html"><a href="r-data-types.html#vectors"><i class="fa fa-check"></i><b>4.5</b> Vectors</a></li>
+<li class="chapter" data-level="4.6" data-path="r-data-types.html"><a href="r-data-types.html#factors"><i class="fa fa-check"></i><b>4.6</b> Factors</a></li>
+<li class="chapter" data-level="4.7" data-path="r-data-types.html"><a href="r-data-types.html#list-of-lists"><i class="fa fa-check"></i><b>4.7</b> List of lists</a></li>
+<li class="chapter" data-level="4.8" data-path="r-data-types.html"><a href="r-data-types.html#matrices"><i class="fa fa-check"></i><b>4.8</b> Matrices</a></li>
+<li class="chapter" data-level="4.9" data-path="r-data-types.html"><a href="r-data-types.html#data-frames"><i class="fa fa-check"></i><b>4.9</b> Data frames</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="preparing-your-data-for-analysis.html"><a href="preparing-your-data-for-analysis.html"><i class="fa fa-check"></i><b>5</b> Preparing your data for analysis</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="preparing-your-data-for-analysis.html"><a href="preparing-your-data-for-analysis.html#reading-the-data"><i class="fa fa-check"></i><b>5.1</b> Reading the data</a></li>
+<li class="chapter" data-level="5.2" data-path="preparing-your-data-for-analysis.html"><a href="preparing-your-data-for-analysis.html#transforming-entire-columns"><i class="fa fa-check"></i><b>5.2</b> Transforming entire columns</a></li>
+<li class="chapter" data-level="5.3" data-path="preparing-your-data-for-analysis.html"><a href="preparing-your-data-for-analysis.html#subsetting-data"><i class="fa fa-check"></i><b>5.3</b> Subsetting data</a></li>
+<li class="chapter" data-level="5.4" data-path="preparing-your-data-for-analysis.html"><a href="preparing-your-data-for-analysis.html#useful-functions"><i class="fa fa-check"></i><b>5.4</b> Useful functions</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="conditions---if-and-else.html"><a href="conditions---if-and-else.html"><i class="fa fa-check"></i><b>6</b> Conditions - If and Else</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="conditions---if-and-else.html"><a href="conditions---if-and-else.html#if"><i class="fa fa-check"></i><b>6.1</b> If</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="for-and-while.html"><a href="for-and-while.html"><i class="fa fa-check"></i><b>7</b> For and While</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="for-and-while.html"><a href="for-and-while.html#for"><i class="fa fa-check"></i><b>7.1</b> For</a></li>
+<li class="chapter" data-level="7.2" data-path="for-and-while.html"><a href="for-and-while.html#while"><i class="fa fa-check"></i><b>7.2</b> While</a></li>
+<li class="chapter" data-level="7.3" data-path="for-and-while.html"><a href="for-and-while.html#do-while"><i class="fa fa-check"></i><b>7.3</b> Do-while</a></li>
+<li class="chapter" data-level="7.4" data-path="for-and-while.html"><a href="for-and-while.html#for-vs.-while"><i class="fa fa-check"></i><b>7.4</b> For vs. While</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="writing-own-functions.html"><a href="writing-own-functions.html"><i class="fa fa-check"></i><b>8</b> Writing own functions</a></li>
+<li class="chapter" data-level="9" data-path="debugging.html"><a href="debugging.html"><i class="fa fa-check"></i><b>9</b> Debugging</a></li>
+<li class="chapter" data-level="10" data-path="piping.html"><a href="piping.html"><i class="fa fa-check"></i><b>10</b> Piping</a></li>
+<li class="chapter" data-level="11" data-path="linear-models.html"><a href="linear-models.html"><i class="fa fa-check"></i><b>11</b> Linear Models</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="linear-models.html"><a href="linear-models.html#definition---simple-linear-regression"><i class="fa fa-check"></i><b>11.1</b> Definition - Simple Linear Regression</a></li>
+<li class="chapter" data-level="11.2" data-path="linear-models.html"><a href="linear-models.html#sample-data"><i class="fa fa-check"></i><b>11.2</b> Sample data</a></li>
+<li class="chapter" data-level="11.3" data-path="linear-models.html"><a href="linear-models.html#fitting-a-linear-model"><i class="fa fa-check"></i><b>11.3</b> Fitting a Linear Model</a></li>
+<li class="chapter" data-level="11.4" data-path="linear-models.html"><a href="linear-models.html#linear-model---assumptions"><i class="fa fa-check"></i><b>11.4</b> Linear Model - Assumptions</a></li>
+<li class="chapter" data-level="11.5" data-path="linear-models.html"><a href="linear-models.html#assumption-1---linear-relationship"><i class="fa fa-check"></i><b>11.5</b> Assumption 1 - Linear Relationship</a></li>
+<li class="chapter" data-level="11.6" data-path="linear-models.html"><a href="linear-models.html#assumption-2---independence-of-residuals"><i class="fa fa-check"></i><b>11.6</b> Assumption 2 - Independence of Residuals</a></li>
+<li class="chapter" data-level="11.7" data-path="linear-models.html"><a href="linear-models.html#durban-watson-test"><i class="fa fa-check"></i><b>11.7</b> Durban-Watson-Test</a></li>
+<li class="chapter" data-level="11.8" data-path="linear-models.html"><a href="linear-models.html#assumption-3---constant-variance-or-errors"><i class="fa fa-check"></i><b>11.8</b> Assumption 3 - Constant variance or errors</a></li>
+<li class="chapter" data-level="11.9" data-path="linear-models.html"><a href="linear-models.html#assumption-4---normality-of-residuals"><i class="fa fa-check"></i><b>11.9</b> Assumption 4 - Normality of Residuals</a></li>
+<li class="chapter" data-level="11.10" data-path="linear-models.html"><a href="linear-models.html#shapiro-wilk-test-for-normality"><i class="fa fa-check"></i><b>11.10</b> Shapiro-Wilk-Test for Normality</a></li>
+<li class="chapter" data-level="11.11" data-path="linear-models.html"><a href="linear-models.html#other-possibilities-of-checking-assumptions"><i class="fa fa-check"></i><b>11.11</b> Other possibilities of checking assumptions</a></li>
+<li class="chapter" data-level="11.12" data-path="linear-models.html"><a href="linear-models.html#definition---linear-model-with-multiple-predictors"><i class="fa fa-check"></i><b>11.12</b> Definition - Linear Model with multiple predictors</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="plotting.html"><a href="plotting.html"><i class="fa fa-check"></i><b>12</b> Plotting</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="plotting.html"><a href="plotting.html#standard-library"><i class="fa fa-check"></i><b>12.1</b> Standard library</a>
+<ul>
+<li class="chapter" data-level="12.1.1" data-path="plotting.html"><a href="plotting.html#points-or-lines-type"><i class="fa fa-check"></i><b>12.1.1</b> Points or Lines? (type)</a></li>
+<li class="chapter" data-level="12.1.2" data-path="plotting.html"><a href="plotting.html#line-type-lty"><i class="fa fa-check"></i><b>12.1.2</b> Line type (lty)</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="plotting.html"><a href="plotting.html#ggplot"><i class="fa fa-check"></i><b>12.2</b> ggplot</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>13</b> R-Markdown</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="r-markdown.html"><a href="r-markdown.html#output-formats"><i class="fa fa-check"></i><b>13.1</b> Output formats</a></li>
+<li class="chapter" data-level="13.2" data-path="r-markdown.html"><a href="r-markdown.html#document-structure"><i class="fa fa-check"></i><b>13.2</b> Document structure</a></li>
+<li class="chapter" data-level="13.3" data-path="r-markdown.html"><a href="r-markdown.html#code-blocks"><i class="fa fa-check"></i><b>13.3</b> Code blocks</a></li>
+<li class="chapter" data-level="13.4" data-path="r-markdown.html"><a href="r-markdown.html#lists"><i class="fa fa-check"></i><b>13.4</b> Lists</a></li>
+<li class="chapter" data-level="13.5" data-path="r-markdown.html"><a href="r-markdown.html#insert-an-image"><i class="fa fa-check"></i><b>13.5</b> Insert an image</a></li>
+<li class="chapter" data-level="13.6" data-path="r-markdown.html"><a href="r-markdown.html#further-documentation"><i class="fa fa-check"></i><b>13.6</b> Further documentation</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="short-statistical-breaks.html"><a href="short-statistical-breaks.html"><i class="fa fa-check"></i><b>14</b> Short statistical breaks</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="short-statistical-breaks.html"><a href="short-statistical-breaks.html#dinosours"><i class="fa fa-check"></i><b>14.1</b> Dinosours</a></li>
+<li class="chapter" data-level="14.2" data-path="short-statistical-breaks.html"><a href="short-statistical-breaks.html#stars"><i class="fa fa-check"></i><b>14.2</b> Stars</a></li>
+<li class="chapter" data-level="14.3" data-path="short-statistical-breaks.html"><a href="short-statistical-breaks.html#correlation"><i class="fa fa-check"></i><b>14.3</b> Correlation</a></li>
+<li class="chapter" data-level="14.4" data-path="short-statistical-breaks.html"><a href="short-statistical-breaks.html#beginners-book"><i class="fa fa-check"></i><b>14.4</b> Beginners Book</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Programming for Data Analysis and Statistics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="linear-models" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">11</span> Linear Models<a href="linear-models.html#linear-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="definition---simple-linear-regression" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> Definition - Simple Linear Regression<a href="linear-models.html#definition---simple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><span class="math display">\[
+\begin{equation}
+y_i = \beta_0 + \beta_1x_i  + \epsilon_i, \qquad   i=1,...,n
+\end{equation}
+\]</span>
+where <span class="math inline">\(y\)</span> is the dependent variable, <span class="math inline">\(x\)</span> is the independent variable (also called explanatory variable), <span class="math inline">\(\beta_0\)</span> is the intercept parameter, <span class="math inline">\(\beta_1\)</span> is the slope parameter and <span class="math inline">\(\epsilon\sim N(0,\sigma^2)\)</span> is the error coefficient.</p>
+</div>
+<div id="sample-data" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> Sample data<a href="linear-models.html#sample-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="linear-models.html#cb154-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">5</span>,<span class="fl">0.1</span>) </span>
+<span id="cb154-2"><a href="linear-models.html#cb154-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(x))</span>
+<span id="cb154-3"><a href="linear-models.html#cb154-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span></code></pre></div>
+<p><img src="courseNotes_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
+</div>
+<div id="fitting-a-linear-model" class="section level2 hasAnchor" number="11.3">
+<h2><span class="header-section-number">11.3</span> Fitting a Linear Model<a href="linear-models.html#fitting-a-linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="linear-models.html#cb155-1" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x)</span>
+<span id="cb155-2"><a href="linear-models.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.42254 -0.86113 -0.08825  0.79743  2.33311 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.06421    0.32623   0.197    0.845    
+## x            0.97646    0.11245   8.684 1.75e-11 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.182 on 49 degrees of freedom
+## Multiple R-squared:  0.6061, Adjusted R-squared:  0.5981 
+## F-statistic: 75.41 on 1 and 49 DF,  p-value: 1.755e-11</code></pre>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="linear-models.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y)</span>
+<span id="cb157-2"><a href="linear-models.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">reg =</span> mod)</span></code></pre></div>
+<p><img src="courseNotes_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
+</div>
+<div id="linear-model---assumptions" class="section level2 hasAnchor" number="11.4">
+<h2><span class="header-section-number">11.4</span> Linear Model - Assumptions<a href="linear-models.html#linear-model---assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Linear relationship between x and y</li>
+<li>Independence of residuals</li>
+<li>Constant variance of residuals</li>
+<li>Normality: Residuals are normally distributed</li>
+</ul>
+</div>
+<div id="assumption-1---linear-relationship" class="section level2 hasAnchor" number="11.5">
+<h2><span class="header-section-number">11.5</span> Assumption 1 - Linear Relationship<a href="linear-models.html#assumption-1---linear-relationship" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>use a scatterplot to check</li>
+<li>if this assumption is violated we have unrealistic predictions and estimates of the standard deviation</li>
+<li>How to deal with this? You can transform the variables or alter the model.</li>
+</ul>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="linear-models.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x,y)</span></code></pre></div>
+<p><img src="courseNotes_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+</div>
+<div id="assumption-2---independence-of-residuals" class="section level2 hasAnchor" number="11.6">
+<h2><span class="header-section-number">11.6</span> Assumption 2 - Independence of Residuals<a href="linear-models.html#assumption-2---independence-of-residuals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Plot residuals in time/ observation order / based on observation location / …</li>
+<li>You expect that they are equally scattered around 0</li>
+<li>You can also use the Durban-Watson-Test</li>
+<li>Autocorrelation can have serious effects on the model</li>
+<li>You can add an AR correlation term to the model. Sometimes it also helps to add a further covariate.</li>
+</ul>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="linear-models.html#cb159-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">residuals</span>(mod)</span>
+<span id="cb159-2"><a href="linear-models.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, res)</span></code></pre></div>
+<p><img src="courseNotes_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+</div>
+<div id="durban-watson-test" class="section level2 hasAnchor" number="11.7">
+<h2><span class="header-section-number">11.7</span> Durban-Watson-Test<a href="linear-models.html#durban-watson-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>H0: There is no correlation among the residuals.</p></li>
+<li><p>HA: The residuals are autocorrelated.</p></li>
+</ul>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="linear-models.html#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div>
+<pre><code>## Loading required package: carData</code></pre>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="linear-models.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">durbinWatsonTest</span>(mod)</span></code></pre></div>
+<pre><code>##  lag Autocorrelation D-W Statistic p-value
+##    1      -0.1998288      2.317134   0.304
+##  Alternative hypothesis: rho != 0</code></pre>
+<ul>
+<li>The p-value is larger than 0.05, so we cannot reject the null hypothesis that there is no correlation between residuals.</li>
+</ul>
+</div>
+<div id="assumption-3---constant-variance-or-errors" class="section level2 hasAnchor" number="11.8">
+<h2><span class="header-section-number">11.8</span> Assumption 3 - Constant variance or errors<a href="linear-models.html#assumption-3---constant-variance-or-errors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Plot fitted values vs residuals</li>
+<li>You expect that they are equally scattered around 0</li>
+</ul>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="linear-models.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">fitted</span>(mod),res)</span></code></pre></div>
+<p><img src="courseNotes_files/figure-html/unnamed-chunk-65-1.png" width="672" /></p>
+</div>
+<div id="assumption-4---normality-of-residuals" class="section level2 hasAnchor" number="11.9">
+<h2><span class="header-section-number">11.9</span> Assumption 4 - Normality of Residuals<a href="linear-models.html#assumption-4---normality-of-residuals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Use qq-plot to compare quantiles.</li>
+<li>Or use the Shapiro-Wilk-Test</li>
+<li>If you do not find a Normal Distribution, check for outliers or transform your variable.</li>
+</ul>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="linear-models.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqPlot</span>(res)</span></code></pre></div>
+<p><img src="courseNotes_files/figure-html/unnamed-chunk-66-1.png" width="672" /></p>
+<pre><code>## [1] 21  6</code></pre>
+</div>
+<div id="shapiro-wilk-test-for-normality" class="section level2 hasAnchor" number="11.10">
+<h2><span class="header-section-number">11.10</span> Shapiro-Wilk-Test for Normality<a href="linear-models.html#shapiro-wilk-test-for-normality" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>H0: The data is normally distributed</li>
+<li>HA: The data comes from an other distribution</li>
+</ul>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="linear-models.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(res)</span></code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  res
+## W = 0.98084, p-value = 0.575</code></pre>
+<ul>
+<li>We cannot reject the null-hypothesis that the data is normally distributed.</li>
+</ul>
+</div>
+<div id="other-possibilities-of-checking-assumptions" class="section level2 hasAnchor" number="11.11">
+<h2><span class="header-section-number">11.11</span> Other possibilities of checking assumptions<a href="linear-models.html#other-possibilities-of-checking-assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Did you learn about this before? Did you hear about other options?</li>
+</ul>
+</div>
+<div id="definition---linear-model-with-multiple-predictors" class="section level2 hasAnchor" number="11.12">
+<h2><span class="header-section-number">11.12</span> Definition - Linear Model with multiple predictors<a href="linear-models.html#definition---linear-model-with-multiple-predictors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><span class="math display">\[\begin{equation}\label{eqn:linearregression}
+y_i = \beta_0 + \beta_1x_{1,i} + ... + \beta_px_{p,i} + \epsilon_i, \qquad   i=1,...,n
+\end{equation}\]</span>
+where <span class="math inline">\(y\)</span> is the dependent variable, <span class="math inline">\(x_1 ... x_p\)</span> are the independent variables (also called explanatory variables), <span class="math inline">\(\beta_0 ... \beta_p\)</span> are the regression coefficients, <span class="math inline">\(\epsilon\sim N(0,\sigma^2)\)</span> is the error coefficient and <span class="math inline">\(p \geq 1\)</span>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="piping.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="plotting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="book_assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="book_assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": false,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

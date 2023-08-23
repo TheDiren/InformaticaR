@@ -33,9 +33,9 @@ background-color: lightblue;
 }
 </style>
 
-# index
+# About
 
-This guide was created for the course "Programming for Data Analysis and Statistics with R" at the Informatica Feminale 2019 and extended for the same course in 2020.
+This guide was created for the course "Programming for Data Analysis and Statistics with R" at the Informatica Feminale 2019 and extended for the same courses in 2020 and 2023.
 
 # Installation Notes
 
@@ -46,15 +46,18 @@ This guide was created for the course "Programming for Data Analysis and Statist
   If you haven't installed R and RStudio yet, use following instructions for the installation:
   
 1. Install R: 
-  - On Windows: https://www.dummies.com/programming/r/how-to-install-r/
-  - For Linux and Mac: https://cran.r-project.org/doc/FAQ/R-FAQ.html#How-can-R-be-installed_003f
+  
+Installation on Windows and Mac
+[https://www.dataquest.io/blog/installing-r-on-your-computer/](https://www.dataquest.io/blog/installing-r-on-your-computer/)
+For Linux
+[https://cran.r-project.org/doc/FAQ/R-FAQ.html#How-can-R-be-installed-_0028Unix_002dlike_0029](https://cran.r-project.org/doc/FAQ/R-FAQ.html#How-can-R-be-installed-_0028Unix_002dlike_0029)
 
 
 
 2. Install the free RStudio Desktop Version: https://www.rstudio.com/products/rstudio/#Desktop
 
 
-Do you know how you can install new R packages? You can read about it here: https://www.dummies.com/programming/r/how-to-install-load-and-unload-packages-in-r/
+Do you know how you can install new R packages? You can read about it here: [ https://thedatacommunity.org/2017/09/17/installing-loading-unloading-and-removing-r-packages-in-rstudio/](https://thedatacommunity.org/2017/09/17/installing-loading-unloading-and-removing-r-packages-in-rstudio/ )
 
 # RStudio Programming Environment
 
@@ -85,14 +88,14 @@ It can be helpful to create a project instead. All files within the project's di
 - In the bottom left hand corner you will be able to see the files in your project, your plots and more information e.g. about functions
 ![RStudio screen](images/rstudio.png)
 
-You can use "Ctrl" followed by a number to jump to a specific window. If you want to get into the terminal use "Shift+Alt+t".
+You can use "Ctrl" followed by a number to jump to a specific window. If you want to get into the terminal use "Shift+Alt+t" or "Shift+Alt+m". You can find an overview of all short cuts using "Shift+Alt+k".
 ![RStudio screen](images/rstudioNumbers.png)
 
 
 ## R Workflow
 
 - You type your scripts in the code editor, so that you can save them.
-- If you want to run the whole script, you can click on 'Source' at the tope of the code editor or press "Ctrl + Alt + R".
+- If you want to run the whole script, you can click on 'Source' at the tope of the code editor or press "Ctrl + Alt + R". (Shortcuts might differ depending on your system.)
 - Use "Ctrl + Alt + B/E" to run from the beginning to the current line or from the current line to the end.
 - If you want to run a single line, you can click on 'Run' or press "Control + Enter"
 - If you want to run a few lines, highlight the lines you want to run and use 'Run'/  "Control + Enter"
@@ -143,6 +146,16 @@ a&b
 is.na
 
 as.numeric(a)
+```
+
+## && and ||
+
+```{r, error=T}
+c(T,T,T) & c(T,F,F)
+c(T,T,T) && c(T,F,F)
+IDontExist
+T | IDontExist
+T || IDontExist
 ```
 
 ## Vectors
@@ -547,16 +560,28 @@ repeat{
 ```
 
 bad example for Do-while:
-```{r error=TRUE}
-a <- 0.5
+```{r}
+a <- 10
 repeat{
   a <- a - sqrt(a)
   print(a)
-  if(sqrt(a) > a){
+  if(a < 0){
     break
   }
 }
 ```
+because it breaks for edge cases:
+```{r error=TRUE}
+a <- -10
+repeat{
+  a <- a - sqrt(a)
+  print(a)
+  if(a < 0){
+    break
+  }
+}
+```
+
 
 
 ![](images/do-while.png){width=75%}
@@ -679,6 +704,118 @@ nrow(subset(df, hive==4))
 df %>% subset(hive==4) %>% nrow
 
 ```
+
+# Linear Models
+
+## Definition - Simple Linear Regression
+
+$$
+\begin{equation}
+y_i = \beta_0 + \beta_1x_i  + \epsilon_i, \qquad   i=1,...,n
+\end{equation}
+$$
+where $y$ is the dependent variable, $x$ is the independent variable (also called explanatory variable),  $\beta_0$ is the intercept parameter, $\beta_1$ is the slope parameter and $\epsilon\sim N(0,\sigma^2)$ is the error coefficient.
+
+## Sample data
+
+```{r}
+x <- seq(0,5,0.1) 
+y <- x + rnorm(length(x))
+plot(x, y)
+
+```
+
+## Fitting a Linear Model
+
+```{r}
+mod <- lm(y~x)
+summary(mod)
+plot(x,y)
+abline(reg = mod)
+```
+
+## Linear Model - Assumptions
+
+- Linear relationship between x and y
+- Independence of residuals
+- Constant variance of residuals
+- Normality: Residuals are normally distributed
+
+## Assumption 1 - Linear Relationship
+
+- use a scatterplot to check
+- if this assumption is violated we have unrealistic predictions and estimates of the standard deviation
+- How to deal with this? You can transform the variables or alter the model.
+
+```{r}
+plot(x,y)
+```
+
+## Assumption 2 - Independence of Residuals
+
+- Plot residuals in time/ observation order / based on observation location / ...
+- You expect that they are equally scattered around 0 
+- You can also use the Durban-Watson-Test
+- Autocorrelation can have serious effects on the model
+- You can add an AR correlation term to the model. Sometimes it also helps to add a further covariate.
+```{r}
+res <- residuals(mod)
+plot(x, res)
+```
+
+## Durban-Watson-Test
+- H0: There is no correlation among the residuals.
+
+- HA: The residuals are autocorrelated.
+
+```{r}
+library(car)
+durbinWatsonTest(mod)
+```
+
+- The p-value is larger than 0.05, so we cannot reject the null hypothesis that there is no correlation between residuals.
+
+## Assumption 3 - Constant variance or errors
+- Plot fitted values vs residuals
+- You expect that they are equally scattered around 0 
+
+```{r}
+plot(fitted(mod),res)
+```
+
+## Assumption 4 - Normality of Residuals
+
+- Use qq-plot to compare quantiles.
+- Or use the Shapiro-Wilk-Test
+- If you do not find a Normal Distribution, check for outliers or transform your variable.
+
+```{r}
+qqPlot(res)
+```
+
+## Shapiro-Wilk-Test for Normality
+
+- H0: The data is normally distributed
+- HA: The data comes from an other distribution
+
+```{r}
+shapiro.test(res)
+```
+- We cannot reject the null-hypothesis that the data is normally distributed. 
+
+## Other possibilities of checking assumptions
+
+- Did you learn about this before? Did you hear about other options?
+
+
+## Definition - Linear Model with multiple predictors
+
+$$\begin{equation}\label{eqn:linearregression}
+y_i = \beta_0 + \beta_1x_{1,i} + ... + \beta_px_{p,i} + \epsilon_i, \qquad   i=1,...,n
+\end{equation}$$
+where $y$ is the dependent variable, $x_1 ... x_p$ are the independent variables (also called explanatory variables),  $\beta_0 ... \beta_p$ are the regression coefficients, $\epsilon\sim N(0,\sigma^2)$ is the error coefficient  and $p \geq 1$.
+
+
 
 # Plotting
 
