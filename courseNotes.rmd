@@ -102,6 +102,16 @@ You can use "Ctrl" followed by a number to jump to a specific window. If you wan
 - If you want to use Autocomplete, you can press "Control + Space"
 - If you want to read about an existing method, you can type "?\<Name of the method\>" to get to the documentation
 
+# Packages
+
+In this script, we make use of following packages: reshape, ggplot2, lubridate, magrittr, car
+
+You can install them using following command:
+
+```{r eval=FALSE}
+install.packages(c("reshape", "ggplot2", "lubridate", "magrittr", "car"))
+```
+
 
 # R Data types
 ## Character

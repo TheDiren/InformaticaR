@@ -14,6 +14,8 @@ output: ioslides_presentation
 - slides [https://thediren.github.io/InformaticaR/presi.html#1](https://thediren.github.io/InformaticaR/presi.html#1)
 
 
+
+
 ## Who are you?
 
 - What is your subject/ your profession?
